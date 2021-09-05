@@ -1,20 +1,22 @@
 package app
 
 import (
+	"github.com/rohan-das/banking/domain"
 	"log"
 	"net/http"
 
 	"github.com/gorilla/mux"
+	"github.com/rohan-das/banking/service"
 )
 
 func Start() {
 	router := mux.NewRouter()
 
+	// wiring
+	ch := CustomerHandlers{service: service.NewCustomerService(domain.NewCustomerRepositoryStub())}
+
 	// routes
-	router.HandleFunc("/greet", greet).Methods(http.MethodGet)
-	router.HandleFunc("/customers", getAllCustomers).Methods(http.MethodGet)
-	router.HandleFunc("/customer/{id:[0-9]+}", getCustomer).Methods(http.MethodGet)
-	router.HandleFunc("/customers", createCustomer).Methods(http.MethodPost)
+	router.HandleFunc("/customers", ch.getAllCustomers).Methods(http.MethodGet)
 
 	// starting server
 	log.Fatal(http.ListenAndServe(":8000", router))
