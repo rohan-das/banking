@@ -62,7 +62,7 @@ func (db CustomerRepositoryDb) FindById(id string) (*Customer, *errs.AppError) {
 }
 
 func NewCustomerRepositoryDb() CustomerRepositoryDb {
-	db, err := sql.Open("mysql", "root:password@tcp(localhost:3307)/banking")
+	db, err := sql.Open("mysql", "root:password@tcp(localhost:3306)/banking")
 	if err != nil {
 		panic(err)
 	}
