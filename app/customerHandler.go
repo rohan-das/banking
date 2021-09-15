@@ -8,11 +8,11 @@ import (
 	"github.com/rohan-das/banking/service"
 )
 
-type CustomerHandlers struct {
+type CustomerHandler struct {
 	service service.CustomerService
 }
 
-func (ch *CustomerHandlers) getAllCustomers(w http.ResponseWriter, r *http.Request) {
+func (ch *CustomerHandler) getAllCustomers(w http.ResponseWriter, r *http.Request) {
 	status := r.URL.Query().Get("status")
 	customers, err := ch.service.GetAllCustomers(status)
 	if err != nil {
@@ -22,7 +22,7 @@ func (ch *CustomerHandlers) getAllCustomers(w http.ResponseWriter, r *http.Reque
 	}
 }
 
-func (ch *CustomerHandlers) getCustomerById(w http.ResponseWriter, r *http.Request) {
+func (ch *CustomerHandler) getCustomerById(w http.ResponseWriter, r *http.Request) {
 	vars := mux.Vars(r)
 	id := vars["customer_id"]
 	customer, err := ch.service.GetCustomerById(id)
